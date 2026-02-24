@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor Ilm — Quran Knowledge Explorer</title>
+
+<!-- ── FAVICON (inline SVG as data URI) ── -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%230a0f0d'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='40' font-family='serif' fill='%23c9a84c'>ن</text></svg>">
+
+<!-- ── GOOGLE ANALYTICS ── -->
+<!-- Replace G-XXXXXXXXXX with your actual Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<!-- ── SOCIAL MEDIA / OG TAGS ── -->
+<meta name="description" content="Noor Ilm — An interactive visual explorer of the Holy Quran. Discover all 114 Surahs, 30 Juzz, 25 Prophets, and key facts through beautiful visualizations.">
+<meta name="keywords" content="Quran, Islamic knowledge, Surahs, Juzz, Prophets, Islam, education, Noor Ilm">
+<meta name="author" content="Noor Ilm">
+
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.noorilm.com/">
+<meta property="og:title" content="Noor Ilm — Quran Knowledge Explorer">
+<meta property="og:description" content="Explore the Holy Quran visually — 114 Surahs, 30 Juzz, 25 Prophets & more. Interactive Islamic knowledge for everyone.">
+<meta property="og:image" content="https://www.noorilm.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Noor Ilm">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://www.noorilm.com/">
+<meta name="twitter:title" content="Noor Ilm — Quran Knowledge Explorer">
+<meta name="twitter:description" content="Explore the Holy Quran visually — 114 Surahs, 30 Juzz, 25 Prophets & more.">
+<meta name="twitter:image" content="https://www.noorilm.com/og-image.png">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://www.noorilm.com/">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0f0d;
+    --bg2: #0f1712;
+    --bg3: #141f19;
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --gold-dim: #7a6230;
+    --green: #1a4a2e;
+    --green-bright: #2d7a4f;
+    --text: #e8e0d0;
+    --text-dim: #8a8070;
+    --card: #111a14;
+    --border: #1e2e22;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Geometric background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      repeating-linear-gradient(60deg, transparent, transparent 40px, rgba(201,168,76,0.025) 40px, rgba(201,168,76,0.025) 41px),
+      repeating-linear-gradient(-60deg, transparent, transparent 40px, rgba(201,168,76,0.025) 40px, rgba(201,168,76,0.025) 41px),
+      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,168,76,0.015) 40px, rgba(201,168,76,0.015) 41px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 80px 20px 60px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 40px rgba(201,168,76,0.4);
+    animation: fadeDown 1s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+    animation: fadeDown 1s 0.15s ease both;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-top: 16px;
+    letter-spacing: 1px;
+    animation: fadeDown 1s 0.3s ease both;
+  }
+
+  .gold-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 30px auto;
+    animation: fadeDown 1s 0.4s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── NAV PILLS ── */
+  .nav-pills {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 20px 50px;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+
+  .pill {
+    padding: 10px 24px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+    z-index: -1;
+  }
+
+  .pill:hover::before, .pill.active::before { transform: scaleX(1); }
+  .pill:hover, .pill.active { color: var(--bg); border-color: var(--gold); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 100px;
+  }
+
+  /* ── SECTION ── */
+  .section { display: none; }
+  .section.active { display: block; animation: sectionIn 0.5s ease; }
+
+  @keyframes sectionIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .section-desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+    max-width: 500px;
+  }
+
+  /* ── STATS GRID ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-dim));
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+
+  .stat-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+  .stat-card:hover::after { transform: scaleX(1); }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    counter-reset: num var(--n);
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 8px;
+  }
+
+  /* ── SURAHS TABLE ── */
+  .surah-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .surah-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .surah-card:hover {
+    border-color: var(--gold-dim);
+    background: var(--bg3);
+  }
+
+  .surah-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold-dim);
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .surah-info { flex: 1; }
+
+  .surah-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .surah-meta {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+
+  .surah-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+  .surah-tag {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 1px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .tag-makki { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .tag-madani { background: rgba(45,122,79,0.2); color: #5dbf8a; }
+
+  /* ── PILLARS ── */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .pillar-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .pillar-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+  .pillar-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.2;
+    position: absolute;
+    top: 10px; right: 20px;
+    line-height: 1;
+  }
+
+  .pillar-icon { font-size: 2.5rem; margin-bottom: 16px; }
+
+  .pillar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .pillar-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  .pillar-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ── PROPHETS ── */
+  .prophets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .prophet-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 20px 16px;
+    text-align: center;
+    transition: all 0.25s;
+  }
+
+  .prophet-card:hover { border-color: var(--gold-dim); background: var(--bg3); }
+
+  .prophet-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: var(--gold-dim);
+    margin-bottom: 4px;
+  }
+
+  .prophet-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .prophet-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* ── JUZZ SECTION ── */
+  .juzz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .juzz-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    transition: all 0.25s;
+  }
+
+  .juzz-card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+
+  .juzz-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .juzz-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .juzz-start {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+
+  .juzz-start span { color: var(--text); }
+
+  /* ── SCROLL HINT ── */
+  .scroll-hint {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 40px;
+    opacity: 0.5;
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 28px;
+    max-width: 400px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .search-input:focus { border-color: var(--gold-dim); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2.8rem; }
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+  <h1>Noor Ilm — <span>Quran</span> Explorer</h1>
+  <p class="hero-sub">Interactive Knowledge · Visual Discovery · Timeless Wisdom</p>
+  <div class="gold-line"></div>
+</div>
+
+<div class="nav-pills">
+  <button class="pill active" onclick="showSection('overview')">Overview</button>
+  <button class="pill" onclick="showSection('surahs')">114 Surahs</button>
+  <button class="pill" onclick="showSection('juzz')">30 Juzz</button>
+  <button class="pill" onclick="showSection('prophets')">Prophets</button>
+  <button class="pill" onclick="showSection('pillars')">5 Pillars</button>
+</div>
+
+<div class="content">
+
+  <!-- OVERVIEW -->
+  <div class="section active" id="overview">
+    <div class="section-title">At a Glance</div>
+    <p class="section-desc">Key numerical facts about the Holy Quran — click any category above to explore in detail.</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-num" id="c1">0</div><div class="stat-label">Surahs (Chapters)</div></div>
+      <div class="stat-card"><div class="stat-num" id="c2">0</div><div class="stat-label">Juzz (Parts)</div></div>
+      <div class="stat-card"><div class="stat-num" id="c3">0</div><div class="stat-label">Verses (Ayahs)</div></div>
+      <div class="stat-card"><div class="stat-num" id="c4">0</div><div class="stat-label">Unique Words</div></div>
+      <div class="stat-card"><div class="stat-num" id="c5">0</div><div class="stat-label">Total Letters</div></div>
+      <div class="stat-card"><div class="stat-num" id="c6">0</div><div class="stat-label">Makki Surahs</div></div>
+      <div class="stat-card"><div class="stat-num" id="c7">0</div><div class="stat-label">Madani Surahs</div></div>
+      <div class="stat-card"><div class="stat-num" id="c8">0</div><div class="stat-label">Prophets Mentioned</div></div>
+      <div class="stat-card"><div class="stat-num" id="c9">0</div><div class="stat-label">Years of Revelation</div></div>
+      <div class="stat-card"><div class="stat-num" id="c10">0</div><div class="stat-label">Sajdahs (Prostrations)</div></div>
+      <div class="stat-card"><div class="stat-num" id="c11">0</div><div class="stat-label">Rukus (Sections)</div></div>
+      <div class="stat-card"><div class="stat-num" id="c12">0</div><div class="stat-label">Hizbs</div></div>
+    </div>
+  </div>
+
+  <!-- SURAHS -->
+  <div class="section" id="surahs">
+    <div class="section-title">All 114 Surahs</div>
+    <p class="section-desc">Every chapter of the Quran, with type, verse count, and order of revelation.</p>
+    <div class="search-wrap">
+      <input class="search-input" type="text" placeholder="Search by name..." oninput="filterSurahs(this.value)" />
+    </div>
+    <div class="surah-grid" id="surahGrid"></div>
+  </div>
+
+  <!-- JUZZ -->
+  <div class="section" id="juzz">
+    <div class="section-title">30 Juzz of the Quran</div>
+    <p class="section-desc">The Quran is divided into 30 equal parts (Juzz/Para) for recitation over a month.</p>
+    <div class="juzz-grid" id="juzzGrid"></div>
+  </div>
+
+  <!-- PROPHETS -->
+  <div class="section" id="prophets">
+    <div class="section-title">25 Prophets in the Quran</div>
+    <p class="section-desc">All prophets mentioned by name in the Holy Quran.</p>
+    <div class="prophets-grid" id="prophetsGrid"></div>
+  </div>
+
+  <!-- PILLARS -->
+  <div class="section" id="pillars">
+    <div class="section-title">The 5 Pillars of Islam</div>
+    <p class="section-desc">The five foundational acts of worship in Islam as rooted in the Quran and Sunnah.</p>
+    <div class="pillars-grid" id="pillarsGrid"></div>
+  </div>
+
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+
+const STATS = [
+  { id:'c1',  target: 114,    label: 'Surahs' },
+  { id:'c2',  target: 30,     label: 'Juzz' },
+  { id:'c3',  target: 6236,   label: 'Ayahs' },
+  { id:'c4',  target: 77430,  label: 'Words' },
+  { id:'c5',  target: 323671, label: 'Letters' },
+  { id:'c6',  target: 86,     label: 'Makki' },
+  { id:'c7',  target: 28,     label: 'Madani' },
+  { id:'c8',  target: 25,     label: 'Prophets' },
+  { id:'c9',  target: 23,     label: 'Years' },
+  { id:'c10', target: 14,     label: 'Sajdahs' },
+  { id:'c11', target: 558,    label: 'Rukus' },
+  { id:'c12', target: 60,     label: 'Hizbs' },
+];
+
+const SURAHS = [
+  {n:1,en:"Al-Fatihah",ar:"الفاتحة",v:7,t:"Makki"},
+  {n:2,en:"Al-Baqarah",ar:"البقرة",v:286,t:"Madani"},
+  {n:3,en:"Aal-E-Imran",ar:"آل عمران",v:200,t:"Madani"},
+  {n:4,en:"An-Nisa",ar:"النساء",v:176,t:"Madani"},
+  {n:5,en:"Al-Maidah",ar:"المائدة",v:120,t:"Madani"},
+  {n:6,en:"Al-Anam",ar:"الأنعام",v:165,t:"Makki"},
+  {n:7,en:"Al-Araf",ar:"الأعراف",v:206,t:"Makki"},
+  {n:8,en:"Al-Anfal",ar:"الأنفال",v:75,t:"Madani"},
+  {n:9,en:"At-Tawbah",ar:"التوبة",v:129,t:"Madani"},
+  {n:10,en:"Yunus",ar:"يونس",v:109,t:"Makki"},
+  {n:11,en:"Hud",ar:"هود",v:123,t:"Makki"},
+  {n:12,en:"Yusuf",ar:"يوسف",v:111,t:"Makki"},
+  {n:13,en:"Ar-Ra'd",ar:"الرعد",v:43,t:"Madani"},
+  {n:14,en:"Ibrahim",ar:"إبراهيم",v:52,t:"Makki"},
+  {n:15,en:"Al-Hijr",ar:"الحجر",v:99,t:"Makki"},
+  {n:16,en:"An-Nahl",ar:"النحل",v:128,t:"Makki"},
+  {n:17,en:"Al-Isra",ar:"الإسراء",v:111,t:"Makki"},
+  {n:18,en:"Al-Kahf",ar:"الكهف",v:110,t:"Makki"},
+  {n:19,en:"Maryam",ar:"مريم",v:98,t:"Makki"},
+  {n:20,en:"Ta-Ha",ar:"طه",v:135,t:"Makki"},
+  {n:21,en:"Al-Anbiya",ar:"الأنبياء",v:112,t:"Makki"},
+  {n:22,en:"Al-Hajj",ar:"الحج",v:78,t:"Madani"},
+  {n:23,en:"Al-Muminun",ar:"المؤمنون",v:118,t:"Makki"},
+  {n:24,en:"An-Nur",ar:"النور",v:64,t:"Madani"},
+  {n:25,en:"Al-Furqan",ar:"الفرقان",v:77,t:"Makki"},
+  {n:26,en:"Ash-Shu'ara",ar:"الشعراء",v:227,t:"Makki"},
+  {n:27,en:"An-Naml",ar:"النمل",v:93,t:"Makki"},
+  {n:28,en:"Al-Qasas",ar:"القصص",v:88,t:"Makki"},
+  {n:29,en:"Al-Ankabut",ar:"العنكبوت",v:69,t:"Makki"},
+  {n:30,en:"Ar-Rum",ar:"الروم",v:60,t:"Makki"},
+  {n:31,en:"Luqman",ar:"لقمان",v:34,t:"Makki"},
+  {n:32,en:"As-Sajdah",ar:"السجدة",v:30,t:"Makki"},
+  {n:33,en:"Al-Ahzab",ar:"الأحزاب",v:73,t:"Madani"},
+  {n:34,en:"Saba",ar:"سبأ",v:54,t:"Makki"},
+  {n:35,en:"Fatir",ar:"فاطر",v:45,t:"Makki"},
+  {n:36,en:"Ya-Sin",ar:"يس",v:83,t:"Makki"},
+  {n:37,en:"As-Saffat",ar:"الصافات",v:182,t:"Makki"},
+  {n:38,en:"Sad",ar:"ص",v:88,t:"Makki"},
+  {n:39,en:"Az-Zumar",ar:"الزمر",v:75,t:"Makki"},
+  {n:40,en:"Ghafir",ar:"غافر",v:85,t:"Makki"},
+  {n:41,en:"Fussilat",ar:"فصلت",v:54,t:"Makki"},
+  {n:42,en:"Ash-Shuraa",ar:"الشورى",v:53,t:"Makki"},
+  {n:43,en:"Az-Zukhruf",ar:"الزخرف",v:89,t:"Makki"},
+  {n:44,en:"Ad-Dukhan",ar:"الدخان",v:59,t:"Makki"},
+  {n:45,en:"Al-Jathiyah",ar:"الجاثية",v:37,t:"Makki"},
+  {n:46,en:"Al-Ahqaf",ar:"الأحقاف",v:35,t:"Makki"},
+  {n:47,en:"Muhammad",ar:"محمد",v:38,t:"Madani"},
+  {n:48,en:"Al-Fath",ar:"الفتح",v:29,t:"Madani"},
+  {n:49,en:"Al-Hujurat",ar:"الحجرات",v:18,t:"Madani"},
+  {n:50,en:"Qaf",ar:"ق",v:45,t:"Makki"},
+  {n:51,en:"Adh-Dhariyat",ar:"الذاريات",v:60,t:"Makki"},
+  {n:52,en:"At-Tur",ar:"الطور",v:49,t:"Makki"},
+  {n:53,en:"An-Najm",ar:"النجم",v:62,t:"Makki"},
+  {n:54,en:"Al-Qamar",ar:"القمر",v:55,t:"Makki"},
+  {n:55,en:"Ar-Rahman",ar:"الرحمن",v:78,t:"Madani"},
+  {n:56,en:"Al-Waqiah",ar:"الواقعة",v:96,t:"Makki"},
+  {n:57,en:"Al-Hadid",ar:"الحديد",v:29,t:"Madani"},
+  {n:58,en:"Al-Mujadila",ar:"المجادلة",v:22,t:"Madani"},
+  {n:59,en:"Al-Hashr",ar:"الحشر",v:24,t:"Madani"},
+  {n:60,en:"Al-Mumtahanah",ar:"الممتحنة",v:13,t:"Madani"},
+  {n:61,en:"As-Saf",ar:"الصف",v:14,t:"Madani"},
+  {n:62,en:"Al-Jumu'ah",ar:"الجمعة",v:11,t:"Madani"},
+  {n:63,en:"Al-Munafiqun",ar:"المنافقون",v:11,t:"Madani"},
+  {n:64,en:"At-Taghabun",ar:"التغابن",v:18,t:"Madani"},
+  {n:65,en:"At-Talaq",ar:"الطلاق",v:12,t:"Madani"},
+  {n:66,en:"At-Tahrim",ar:"التحريم",v:12,t:"Madani"},
+  {n:67,en:"Al-Mulk",ar:"الملك",v:30,t:"Makki"},
+  {n:68,en:"Al-Qalam",ar:"القلم",v:52,t:"Makki"},
+  {n:69,en:"Al-Haqqah",ar:"الحاقة",v:52,t:"Makki"},
+  {n:70,en:"Al-Ma'arij",ar:"المعارج",v:44,t:"Makki"},
+  {n:71,en:"Nuh",ar:"نوح",v:28,t:"Makki"},
+  {n:72,en:"Al-Jinn",ar:"الجن",v:28,t:"Makki"},
+  {n:73,en:"Al-Muzzammil",ar:"المزمل",v:20,t:"Makki"},
+  {n:74,en:"Al-Muddathir",ar:"المدثر",v:56,t:"Makki"},
+  {n:75,en:"Al-Qiyamah",ar:"القيامة",v:40,t:"Makki"},
+  {n:76,en:"Al-Insan",ar:"الإنسان",v:31,t:"Madani"},
+  {n:77,en:"Al-Mursalat",ar:"المرسلات",v:50,t:"Makki"},
+  {n:78,en:"An-Naba",ar:"النبأ",v:40,t:"Makki"},
+  {n:79,en:"An-Nazi'at",ar:"النازعات",v:46,t:"Makki"},
+  {n:80,en:"Abasa",ar:"عبس",v:42,t:"Makki"},
+  {n:81,en:"At-Takwir",ar:"التكوير",v:29,t:"Makki"},
+  {n:82,en:"Al-Infitar",ar:"الانفطار",v:19,t:"Makki"},
+  {n:83,en:"Al-Mutaffifin",ar:"المطففين",v:36,t:"Makki"},
+  {n:84,en:"Al-Inshiqaq",ar:"الانشقاق",v:25,t:"Makki"},
+  {n:85,en:"Al-Buruj",ar:"البروج",v:22,t:"Makki"},
+  {n:86,en:"At-Tariq",ar:"الطارق",v:17,t:"Makki"},
+  {n:87,en:"Al-Ala",ar:"الأعلى",v:19,t:"Makki"},
+  {n:88,en:"Al-Ghashiyah",ar:"الغاشية",v:26,t:"Makki"},
+  {n:89,en:"Al-Fajr",ar:"الفجر",v:30,t:"Makki"},
+  {n:90,en:"Al-Balad",ar:"البلد",v:20,t:"Makki"},
+  {n:91,en:"Ash-Shams",ar:"الشمس",v:15,t:"Makki"},
+  {n:92,en:"Al-Layl",ar:"الليل",v:21,t:"Makki"},
+  {n:93,en:"Ad-Duha",ar:"الضحى",v:11,t:"Makki"},
+  {n:94,en:"Ash-Sharh",ar:"الشرح",v:8,t:"Makki"},
+  {n:95,en:"At-Tin",ar:"التين",v:8,t:"Makki"},
+  {n:96,en:"Al-Alaq",ar:"العلق",v:19,t:"Makki"},
+  {n:97,en:"Al-Qadr",ar:"القدر",v:5,t:"Makki"},
+  {n:98,en:"Al-Bayyinah",ar:"البينة",v:8,t:"Madani"},
+  {n:99,en:"Az-Zalzalah",ar:"الزلزلة",v:8,t:"Madani"},
+  {n:100,en:"Al-Adiyat",ar:"العاديات",v:11,t:"Makki"},
+  {n:101,en:"Al-Qari'ah",ar:"القارعة",v:11,t:"Makki"},
+  {n:102,en:"At-Takathur",ar:"التكاثر",v:8,t:"Makki"},
+  {n:103,en:"Al-Asr",ar:"العصر",v:3,t:"Makki"},
+  {n:104,en:"Al-Humazah",ar:"الهمزة",v:9,t:"Makki"},
+  {n:105,en:"Al-Fil",ar:"الفيل",v:5,t:"Makki"},
+  {n:106,en:"Quraysh",ar:"قريش",v:4,t:"Makki"},
+  {n:107,en:"Al-Ma'un",ar:"الماعون",v:7,t:"Makki"},
+  {n:108,en:"Al-Kawthar",ar:"الكوثر",v:3,t:"Makki"},
+  {n:109,en:"Al-Kafirun",ar:"الكافرون",v:6,t:"Makki"},
+  {n:110,en:"An-Nasr",ar:"النصر",v:3,t:"Madani"},
+  {n:111,en:"Al-Masad",ar:"المسد",v:5,t:"Makki"},
+  {n:112,en:"Al-Ikhlas",ar:"الإخلاص",v:4,t:"Makki"},
+  {n:113,en:"Al-Falaq",ar:"الفلق",v:5,t:"Makki"},
+  {n:114,en:"An-Nas",ar:"الناس",v:6,t:"Makki"},
+];
+
+const JUZZ = [
+  {n:1,start:"Al-Fatihah 1:1",end:"Al-Baqarah 2:141"},
+  {n:2,start:"Al-Baqarah 2:142",end:"Al-Baqarah 2:252"},
+  {n:3,start:"Al-Baqarah 2:253",end:"Aal-E-Imran 3:92"},
+  {n:4,start:"Aal-E-Imran 3:93",end:"An-Nisa 4:23"},
+  {n:5,start:"An-Nisa 4:24",end:"An-Nisa 4:147"},
+  {n:6,start:"An-Nisa 4:148",end:"Al-Maidah 5:81"},
+  {n:7,start:"Al-Maidah 5:82",end:"Al-Anam 6:110"},
+  {n:8,start:"Al-Anam 6:111",end:"Al-Araf 7:87"},
+  {n:9,start:"Al-Araf 7:88",end:"Al-Anfal 8:40"},
+  {n:10,start:"Al-Anfal 8:41",end:"At-Tawbah 9:92"},
+  {n:11,start:"At-Tawbah 9:93",end:"Hud 11:5"},
+  {n:12,start:"Hud 11:6",end:"Yusuf 12:52"},
+  {n:13,start:"Yusuf 12:53",end:"Ibrahim 14:52"},
+  {n:14,start:"Al-Hijr 15:1",end:"An-Nahl 16:128"},
+  {n:15,start:"Al-Isra 17:1",end:"Al-Kahf 18:74"},
+  {n:16,start:"Al-Kahf 18:75",end:"Ta-Ha 20:135"},
+  {n:17,start:"Al-Anbiya 21:1",end:"Al-Hajj 22:78"},
+  {n:18,start:"Al-Muminun 23:1",end:"Al-Furqan 25:20"},
+  {n:19,start:"Al-Furqan 25:21",end:"An-Naml 27:55"},
+  {n:20,start:"An-Naml 27:56",end:"Al-Ankabut 29:45"},
+  {n:21,start:"Al-Ankabut 29:46",end:"Al-Ahzab 33:30"},
+  {n:22,start:"Al-Ahzab 33:31",end:"Ya-Sin 36:27"},
+  {n:23,start:"Ya-Sin 36:28",end:"Az-Zumar 39:31"},
+  {n:24,start:"Az-Zumar 39:32",end:"Fussilat 41:46"},
+  {n:25,start:"Fussilat 41:47",end:"Al-Jathiyah 45:37"},
+  {n:26,start:"Al-Ahqaf 46:1",end:"Adh-Dhariyat 51:30"},
+  {n:27,start:"Adh-Dhariyat 51:31",end:"Al-Hadid 57:29"},
+  {n:28,start:"Al-Mujadila 58:1",end:"At-Tahrim 66:12"},
+  {n:29,start:"Al-Mulk 67:1",end:"Al-Mursalat 77:50"},
+  {n:30,start:"An-Naba 78:1",end:"An-Nas 114:6"},
+];
+
+const PROPHETS = [
+  {n:1,en:"Adam",ar:"آدم"},{n:2,en:"Idris",ar:"إدريس"},{n:3,en:"Nuh",ar:"نوح"},
+  {n:4,en:"Hud",ar:"هود"},{n:5,en:"Saleh",ar:"صالح"},{n:6,en:"Ibrahim",ar:"إبراهيم"},
+  {n:7,en:"Lut",ar:"لوط"},{n:8,en:"Ismail",ar:"إسماعيل"},{n:9,en:"Ishaq",ar:"إسحاق"},
+  {n:10,en:"Yaqub",ar:"يعقوب"},{n:11,en:"Yusuf",ar:"يوسف"},{n:12,en:"Shu'aib",ar:"شعيب"},
+  {n:13,en:"Ayyub",ar:"أيوب"},{n:14,en:"Musa",ar:"موسى"},{n:15,en:"Harun",ar:"هارون"},
+  {n:16,en:"Dhul-Kifl",ar:"ذو الكفل"},{n:17,en:"Dawud",ar:"داود"},{n:18,en:"Sulayman",ar:"سليمان"},
+  {n:19,en:"Ilyas",ar:"إلياس"},{n:20,en:"Al-Yasa",ar:"اليسع"},{n:21,en:"Yunus",ar:"يونس"},
+  {n:22,en:"Zakariyya",ar:"زكريا"},{n:23,en:"Yahya",ar:"يحيى"},{n:24,en:"Isa",ar:"عيسى"},
+  {n:25,en:"Muhammad",ar:"محمد ﷺ"},
+];
+
+const PILLARS = [
+  {n:1,icon:"🌙",title:"Shahada",ar:"الشهادة",desc:"Declaration of faith: 'There is no god but Allah, and Muhammad is His Messenger.' The foundation of Islamic belief."},
+  {n:2,icon:"🕌",title:"Salah",ar:"الصلاة",desc:"Five daily prayers performed at dawn, noon, afternoon, sunset, and night. A direct connection between the worshipper and God."},
+  {n:3,icon:"💛",title:"Zakat",ar:"الزكاة",desc:"Obligatory almsgiving — 2.5% of one's savings donated to those in need, purifying wealth and fostering community."},
+  {n:4,icon:"☀️",title:"Sawm",ar:"الصوم",desc:"Fasting during the month of Ramadan from dawn to sunset — abstaining from food, drink, and impure thoughts."},
+  {n:5,icon:"🕋",title:"Hajj",ar:"الحج",desc:"Pilgrimage to Mecca at least once in a lifetime for those who are physically and financially able."},
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+
+function renderSurahs(list) {
+  const grid = document.getElementById('surahGrid');
+  grid.innerHTML = list.map(s => `
+    <div class="surah-card">
+      <div class="surah-num">${s.n}</div>
+      <div class="surah-info">
+        <div class="surah-name">${s.en}</div>
+        <div class="surah-meta">${s.v} verses</div>
+      </div>
+      <div class="surah-arabic">${s.ar}</div>
+      <span class="surah-tag ${s.t === 'Makki' ? 'tag-makki' : 'tag-madani'}">${s.t}</span>
+    </div>
+  `).join('');
+}
+
+function filterSurahs(q) {
+  const filtered = SURAHS.filter(s => s.en.toLowerCase().includes(q.toLowerCase()) || s.ar.includes(q));
+  renderSurahs(filtered);
+}
+
+function renderJuzz() {
+  document.getElementById('juzzGrid').innerHTML = JUZZ.map(j => `
+    <div class="juzz-card">
+      <div class="juzz-num">Juz ${j.n}</div>
+      <div class="juzz-label">Part ${j.n} of 30</div>
+      <div class="juzz-start">Begins: <span>${j.start}</span></div>
+      <div class="juzz-start" style="margin-top:4px">Ends: <span>${j.end}</span></div>
+    </div>
+  `).join('');
+}
+
+function renderProphets() {
+  document.getElementById('prophetsGrid').innerHTML = PROPHETS.map(p => `
+    <div class="prophet-card">
+      <div class="prophet-num">${p.n} of 25</div>
+      <div class="prophet-name">${p.en}</div>
+      <div class="prophet-arabic">${p.ar}</div>
+    </div>
+  `).join('');
+}
+
+function renderPillars() {
+  document.getElementById('pillarsGrid').innerHTML = PILLARS.map(p => `
+    <div class="pillar-card">
+      <div class="pillar-num">${p.n}</div>
+      <div class="pillar-icon">${p.icon}</div>
+      <div class="pillar-title">${p.title}</div>
+      <div class="pillar-arabic">${p.ar}</div>
+      <div class="pillar-desc">${p.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ── COUNTER ANIMATION ─────────────────────────────────────────────────────
+
+function animateCounter(el, target, duration = 1800) {
+  const start = performance.now();
+  const isLarge = target > 9999;
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(ease * target);
+    el.textContent = isLarge ? val.toLocaleString() : val;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function runCounters() {
+  STATS.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el) animateCounter(el, s.target);
+  });
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+
+  if (id === 'overview') runCounters();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+
+renderSurahs(SURAHS);
+renderJuzz();
+renderProphets();
+renderPillars();
+runCounters();
+</script>
+</body>
+</html>
