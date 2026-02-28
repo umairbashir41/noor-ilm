@@ -18,6 +18,12 @@
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 
+<!-- ── VERCEL WEB ANALYTICS ── -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+
 <!-- ── SOCIAL MEDIA / OG TAGS ── -->
 <meta name="description" content="Noor Ilm — An interactive visual explorer of the Holy Quran. Discover all 114 Surahs, 30 Juzz, 25 Prophets, and key facts through beautiful visualizations.">
 <meta name="keywords" content="Quran, Islamic knowledge, Surahs, Juzz, Prophets, Islam, education, Noor Ilm">
@@ -848,7 +854,7 @@ function showSection(id) {
   if (id === 'overview') runCounters();
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────
+// ── INIT ───────────────────────────────���──────────────────────────────────
 
 renderSurahs(SURAHS);
 renderJuzz();

@@ -53,7 +53,24 @@ vercel --prod
 
 ---
 
-## 📊 Set Up Google Analytics (Free)
+## 📊 Set Up Analytics
+
+### Vercel Web Analytics (Recommended)
+
+Vercel Web Analytics is already integrated! To enable it:
+
+1. Go to your Vercel dashboard → select your project
+2. Click the **Analytics** tab
+3. Click **Enable** to activate Web Analytics
+4. Deploy your site (or redeploy if already live)
+5. Visit your site — analytics will start tracking automatically
+6. View your data in the **Analytics** tab on your Vercel dashboard
+
+**Note:** No code changes needed! The analytics script is already in `index.html`. Vercel will automatically serve the tracking script at `/_vercel/insights/script.js` after you enable it.
+
+### Google Analytics (Optional)
+
+If you also want Google Analytics:
 
 1. Go to analytics.google.com → Create account
 2. Create a new Property → get your **Measurement ID** (looks like `G-XXXXXXXXXX`)
